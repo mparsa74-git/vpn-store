@@ -12,53 +12,133 @@
             color: var(--tg-theme-text-color, #000); 
             padding: 20px; 
             text-align: center; 
+            margin: 0;
         }
-        .plan-card { 
-            border: 2px solid var(--tg-theme-button-color, #3390ec); 
-            padding: 15px; 
-            margin-bottom: 15px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-        }
-        .plan-card:hover { 
-            background-color: var(--tg-theme-secondary-bg-color, #f4f4f4); 
-        }
-        button { 
+        h2 { font-size: 20px; margin-bottom: 20px; }
+        
+        /* استایل دکمه‌های ستونی */
+        .menu-btn { 
             background-color: var(--tg-theme-button-color, #3390ec); 
             color: var(--tg-theme-button-text-color, #fff); 
             border: none; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
+            padding: 15px; 
+            border-radius: 10px; 
             width: 100%; 
             font-size: 16px; 
             cursor: pointer;
-            margin-top: 10px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .back-btn {
+            background-color: #757575; /* رنگ خاکستری برای دکمه برگشت */
+        }
+        
+        /* مخفی کردن صفحات ثانویه در ابتدا */
+        #newServiceMenu, #fixedIpMenu { display: none; }
+
+        /* استایل پنجره تایید (Modal) */
+        .modal-overlay {
+            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background-color: #1a237e; /* پس‌زمینه سورمه‌ای */
+            padding: 25px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 320px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .modal-content p {
+            color: #ffffff; /* رنگ متن سفید */
+            font-size: 18px; /* سایز بزرگ (همان نسخه اول) */
+            line-height: 1.6;
+            font-weight: bold; /* فونت ضخیم */
+        }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-confirm { background-color: #4caf50; width: 100%; padding: 12px; border:none; border-radius:8px; color:white; font-size: 16px; cursor: pointer; }
+        .btn-cancel { background-color: #f44336; width: 100%; padding: 12px; border:none; border-radius:8px; color:white; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h2>انتخاب پلن اشتراک</h2>
-    <p>لطفاً یکی از پلن‌های زیر را انتخاب کنید:</p>
 
-    <div class="plan-card">
-        <h3>پلن ۱ ماهه (۵۰ گیگ)</h3>
-        <p>قیمت: ۱۰۰ هزار تومان</p>
-        <button onclick="sendToBot('پلن ۱ ماهه (۵۰ گیگ)')">ادامه و پرداخت</button>
+    <!-- صفحه اول: منوی اصلی -->
+    <div id="mainMenu">
+        <h2>منوی اصلی</h2>
+        <button class="menu-btn" onclick="showPage('newServiceMenu')">🛒 خرید سرویس جدید</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">🔄 تمدید و حجم اضافه</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">📦 سرویس های من</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">💳 کیف پول</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">🎁 اکانت تست</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">🤝 معرفی به دوستان</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">🎓 آموزش</button>
+        <button class="menu-btn" onclick="alert('به زودی فعال می‌شود')">📞 پشتیبانی</button>
     </div>
 
-    <div class="plan-card">
-        <h3>پلن ۳ ماهه (نامحدود)</h3>
-        <p>قیمت: ۲۵۰ هزار تومان</p>
-        <button onclick="sendToBot('پلن ۳ ماهه - نامحدود')">ادامه و پرداخت</button>
+    <!-- صفحه دوم: نوع سرویس -->
+    <div id="newServiceMenu">
+        <h2>انتخاب نوع سرویس</h2>
+        <button class="menu-btn" onclick="showPage('fixedIpMenu')">🌐 سرویس آی پی ثابت</button>
+        <button class="menu-btn" onclick="alert('پلن‌های این بخش به زودی اضافه می‌شود')">🔄 سرویس آی پی متغیر</button>
+        <button class="menu-btn back-btn" onclick="showPage('mainMenu')">🔙 بازگشت به منوی اصلی</button>
+    </div>
+
+    <!-- صفحه سوم: پلن‌های آی‌پی ثابت -->
+    <div id="fixedIpMenu">
+        <h2>سرویس آی پی ثابت</h2>
+        <!-- در تابع openModal نام پلن و قیمت را با یک خط فاصله می‌فرستیم تا در پایتون تفکیک کنیم -->
+        <button class="menu-btn" onclick="openModal('سرویس آی پی ثابت (۱ ماهه - ۲۰ گیگابایت)', '300,000 تومان')">۱ ماهه ۲۰ گیگ - ۳۰۰,۰۰۰ تومان</button>
+        <button class="menu-btn" onclick="openModal('سرویس آی پی ثابت (۱ ماهه - ۳۰ گیگابایت)', '450,000 تومان')">۱ ماهه ۳۰ گیگ - ۴۵۰,۰۰۰ تومان</button>
+        <button class="menu-btn" onclick="openModal('سرویس آی پی ثابت (۱ ماهه - ۶۰ گیگابایت)', '900,000 تومان')">۱ ماهه ۶۰ گیگ - ۹۰۰,۰۰۰ تومان</button>
+        <button class="menu-btn" onclick="openModal('سرویس آی پی ثابت (۱ ماهه - ۱۰۰ گیگابایت)', '1,500,000 تومان')">۱ ماهه ۱۰۰ گیگ - ۱,۵۰۰,۰۰۰ تومان</button>
+        <button class="menu-btn back-btn" onclick="showPage('newServiceMenu')">🔙 بازگشت به قبل</button>
+    </div>
+
+    <!-- پنجره پاپ‌آپ (Modal) -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <p id="modalText">شما در حال خرید پلن ... هستید</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="confirmPurchase()">تایید و پرداخت</button>
+                <button class="btn-cancel" onclick="closeModal()">انصراف</button>
+            </div>
+        </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+        
+        let selectedData = ""; // اطلاعاتی که به ربات می‌رود (اسم + قیمت)
 
-        function sendToBot(planName) {
-            tg.sendData(planName);
+        // جابجایی بین صفحات
+        function showPage(pageId) {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('newServiceMenu').style.display = 'none';
+            document.getElementById('fixedIpMenu').style.display = 'none';
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        // باز کردن پنجره تایید
+        function openModal(planName, price) {
+            // ترکیب اسم پلن و قیمت با یک علامت | برای ارسال به پایتون
+            selectedData = planName + "|" + price; 
+            document.getElementById('modalText').innerText = "شما در حال خرید " + planName + " هستید.";
+            document.getElementById('confirmModal').style.display = "flex";
+        }
+
+        // بستن پنجره
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = "none";
+        }
+
+        // ارسال اطلاعات به ربات
+        function confirmPurchase() {
+            tg.sendData(selectedData);
         }
     </script>
 </body>
