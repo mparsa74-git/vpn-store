@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <!-- تنظیمات برای نمایش صحیح در موبایل -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VPN Store</title>
+    
+    <!-- فراخوانی کتابخانه تلگرام مینی‌اپ -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- فراخوانی تیلویند برای استایل‌دهی سریع و زیبا -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- فونت زیبای وزیرمتن برای فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- تنظیمات فونت و رنگ‌بندی پایه تلگرام -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            /* استفاده از رنگ‌های پیش‌فرض تلگرام در صورت امکان، وگرنه یک تم تاریک شیک */
+            background-color: var(--tg-theme-bg-color, #0f172a);
+            color: var(--tg-theme-text-color, #f8fafc);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .plan-card {
+            background-color: var(--tg-theme-secondary-bg-color, #1e293b);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .plan-card:active {
+            transform: scale(0.98);
+        }
+        .tg-button {
+            background-color: var(--tg-theme-button-color, #3b82f6);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 flex flex-col items-center">
+
+    <header class="w-full max-w-md text-center mt-6 mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 mb-4 shadow-lg shadow-blue-500/20">
+            <!-- آیکون سپر/وی‌پی‌ان با SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight">فروشگاه وی‌پی‌ان (VPN Store)</h1>
+        <p class="text-sm opacity-70 mt-1">سریع، امن و بدون قطعی</p>
+    </header>
+
+    <main class="w-full max-w-md space-y-4">
+        
+        <!-- پلن اول -->
+        <div class="plan-card rounded-2xl p-5 border border-slate-700/50 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2 class="text-lg font-bold">1 Month - 50GB</h2>
+                    <p class="text-xs opacity-60 mt-1">یک ماهه - ۵۰ گیگابایت ترافیک</p>
+                </div>
+                <div class="text-left rtl:text-right text-blue-400 font-bold text-xl">
+                    ۱۰۰,۰۰۰<span class="text-xs opacity-70 block font-normal text-white">تومان</span>
+                </div>
+            </div>
+            <ul class="text-sm opacity-80 space-y-2 mb-5">
+                <li class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    مناسب برای اینستاگرام و وب‌گردی
+                </li>
+            </ul>
+            <button onclick="handleBuy('plan_1m_50g', '۱۰۰,۰۰۰ تومان')" class="tg-button w-full py-3 rounded-xl font-semibold shadow-lg text-sm">
+                خرید این پلن
+            </button>
+        </div>
+
+        <!-- پلن دوم -->
+        <div class="plan-card rounded-2xl p-5 border border-slate-700/50 shadow-xl relative overflow-hidden">
+            <!-- نوار طلایی برای پلن ویژه -->
+            <div class="absolute top-0 right-0 w-2 h-full bg-yellow-500"></div>
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-lg font-bold">3 Months - Unlimited</h2>
+                        <span class="bg-yellow-500/20 text-yellow-400 text-[10px] px-2 py-1 rounded-full font-bold">ویژه</span>
+                    </div>
+                    <p class="text-xs opacity-60 mt-1">سه ماهه - ترافیک نامحدود</p>
+                </div>
+                <div class="text-left rtl:text-right text-yellow-400 font-bold text-xl">
+                    ۲۵۰,۰۰۰<span class="text-xs opacity-70 block font-normal text-white">تومان</span>
+                </div>
+            </div>
+            <ul class="text-sm opacity-80 space-y-2 mb-5">
+                <li class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    سرعت بدون محدودیت
+                </li>
+                <li class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    پینگ عالی برای گیمینگ
+                </li>
+            </ul>
+            <button onclick="handleBuy('plan_3m_unlimited', '۲۵۰,۰۰۰ تومان')" class="tg-button w-full py-3 rounded-xl font-semibold shadow-lg text-sm bg-blue-600 hover:bg-blue-700">
+                خرید این پلن
+            </button>
+        </div>
+
+    </main>
+
+    <div id="customModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">تایید انتخاب</h3>
+            <p class="text-sm opacity-80 mb-6" id="modalMessage">شما پلن را انتخاب کردید.</p>
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-sm font-semibold transition-colors">
+                    انصراف
+                </button>
+                <button onclick="confirmPurchase()" class="flex-1 py-2.5 rounded-xl tg-button text-sm font-semibold transition-colors">
+                    ادامه و پرداخت
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // راه‌اندازی مینی‌اپ تلگرام
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // باز کردن برنامه در تمام صفحه
+        
+        // متغیرهای کمکی
+        let selectedPlanId = '';
+        const modal = document.getElementById('customModal');
+        const modalContent = document.getElementById('modalContent');
+        const modalMessage = document.getElementById('modalMessage');
+
+        // عملکرد دکمه خرید پلن‌ها
+        function handleBuy(planId, priceText) {
+            selectedPlanId = planId;
+            modalMessage.innerHTML = `شما در حال خرید <b>${planId.includes('1m') ? 'پلن یک ماهه' : 'پلن سه ماهه'}</b> با مبلغ <b>${priceText}</b> هستید. مایل به ادامه هستید؟`;
+            
+            // نمایش مودال با افکت
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+            
+            // اگر تلگرام از قابلیت لرزش (Haptic) پشتیبانی کند، یک ویبره کوچک می‌‌زند
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        }
+
+        // بستن مودال
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // تایید نهایی و ارسال اطلاعات به ربات پایتون
+        function confirmPurchase() {
+            // ساختن دیتایی که می‌خواهیم به پایتون بفرستیم
+            const dataToSend = JSON.stringify({
+                action: 'checkout',
+                plan: selectedPlanId
+            });
+
+            // این دستور دیتا را به ربات تلگرامی شما (همان فایل پایتون) برمی‌گرداند
+            // و مینی‌اپ را به صورت خودکار می‌بندد
+            tg.sendData(dataToSend);
+        }
+    </script>
+</body>
+</html>
