@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فروشگاه وی پی ان</title>
-    <!-- اتصال به کتابخانه رسمی تلگرام -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { 
@@ -13,16 +12,18 @@
             color: var(--tg-theme-text-color, #000); 
             padding: 20px; 
             text-align: center; 
-            margin: 0;
         }
         .plan-card { 
             border: 2px solid var(--tg-theme-button-color, #3390ec); 
             padding: 15px; 
             margin-bottom: 15px; 
             border-radius: 12px; 
+            cursor: pointer; 
+            transition: 0.2s; 
         }
-        .plan-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .plan-price { font-size: 16px; margin-bottom: 15px; color: gray; }
+        .plan-card:hover { 
+            background-color: var(--tg-theme-secondary-bg-color, #f4f4f4); 
+        }
         button { 
             background-color: var(--tg-theme-button-color, #3390ec); 
             color: var(--tg-theme-button-text-color, #fff); 
@@ -32,85 +33,32 @@
             width: 100%; 
             font-size: 16px; 
             cursor: pointer;
+            margin-top: 10px;
         }
-        /* استایل پنجره تایید (Modal) با زمینه سورمه‌ای */
-        .modal-overlay {
-            display: none; /* به صورت پیش‌فرض مخفی است */
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center; align-items: center;
-        }
-        .modal-content {
-            background-color: #1a237e; /* رنگ زمینه سورمه‌ای */
-            padding: 25px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 300px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        .modal-content p {
-            color: #ffffff; /* رنگ متن کاملاً سفید */
-            font-size: 18px;
-            line-height: 1.6;
-            font-weight: bold;
-        }
-        .modal-buttons {
-            display: flex; gap: 10px; margin-top: 20px;
-        }
-        .btn-confirm { background-color: #4caf50; } /* سبز برای تایید */
-        .btn-cancel { background-color: #f44336; }  /* قرمز برای انصراف */
     </style>
 </head>
 <body>
     <h2>انتخاب پلن اشتراک</h2>
     <p>لطفاً یکی از پلن‌های زیر را انتخاب کنید:</p>
 
-    <!-- پلن اول -->
     <div class="plan-card">
-        <div class="plan-title">پلن ۱ ماهه (۵۰ گیگ)</div>
-        <div class="plan-price">قیمت: ۱۰۰ هزار تومان</div>
-        <button onclick="openModal('پلن ۱ ماهه (۵۰ گیگ)')">انتخاب این پلن</button>
+        <h3>پلن ۱ ماهه (۵۰ گیگ)</h3>
+        <p>قیمت: ۱۰۰ هزار تومان</p>
+        <button onclick="sendToBot('پلن ۱ ماهه (۵۰ گیگ)')">ادامه و پرداخت</button>
     </div>
 
-    <!-- پلن دوم -->
     <div class="plan-card">
-        <div class="plan-title">پلن ۳ ماهه (نامحدود)</div>
-        <div class="plan-price">قیمت: ۲۵۰ هزار تومان</div>
-        <button onclick="openModal('پلن ۳ ماهه - نامحدود')">انتخاب این پلن</button>
-    </div>
-
-    <!-- پنجره پاپ‌آپ (Modal) -->
-    <div class="modal-overlay" id="confirmModal">
-        <div class="modal-content">
-            <p id="modalText">شما در حال خرید پلن ... هستید</p>
-            <div class="modal-buttons">
-                <button class="btn-confirm" onclick="confirmPurchase()">ادامه و پرداخت</button>
-                <button class="btn-cancel" onclick="closeModal()">انصراف</button>
-            </div>
-        </div>
+        <h3>پلن ۳ ماهه (نامحدود)</h3>
+        <p>قیمت: ۲۵۰ هزار تومان</p>
+        <button onclick="sendToBot('پلن ۳ ماهه - نامحدود')">ادامه و پرداخت</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        let selectedPlan = "";
 
-        // باز کردن پنجره و تغییر متن
-        function openModal(planName) {
-            selectedPlan = planName;
-            document.getElementById('modalText').innerText = "شما در حال خرید " + planName + " هستید.";
-            document.getElementById('confirmModal').style.display = "flex";
-        }
-
-        // بستن پنجره (دکمه انصراف)
-        function closeModal() {
-            document.getElementById('confirmModal').style.display = "none";
-        }
-
-        // ارسال اطلاعات به ربات و بستن اپلیکیشن (دکمه ادامه)
-        function confirmPurchase() {
-            tg.sendData(selectedPlan);
+        function sendToBot(planName) {
+            tg.sendData(planName);
         }
     </script>
 </body>
